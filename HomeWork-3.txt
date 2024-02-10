@@ -1,0 +1,63 @@
+-- Creating external table referring to gcs path
+CREATE OR REPLACE EXTERNAL TABLE `custom-temple-411521.ny_taxi.external_green_tripdata`
+OPTIONS (
+  format = 'parquet',
+  uris = ['gs://mage-zomcamp-3/green/green_tripdata_2022-*.parquet']
+);
+
+-- Check green trip data
+SELECT * FROM custom-temple-411521.ny_taxi.external_green_tripdata limit 10;
+
+-- Create a non partitioned table from external table
+CREATE OR REPLACE TABLE custom-temple-411521.ny_taxi.green_tripdata_non_partitoned AS
+SELECT * FROM custom-temple-411521.ny_taxi.external_green_tripdata;
+
+SELECT count(*) FROM custom-temple-411521.ny_taxi.green_tripdata_non_partitoned;
+
+1 Answer : - 840402
+
+SELECT COUNT(DISTINCT PULocationID) FROM custom-temple-411521.ny_taxi.external_green_tripdata;
+This query will process 0 B when run.
+
+SELECT COUNT(DISTINCT PULocationID) FROM custom-temple-411521.ny_taxi.green_tripdata_non_partitoned;
+This query will process 6.41 MB when run.
+
+2 Answer : - 0 MB for the External Table and 6.41MB for the Materialized Table
+
+SELECT count(*) FROM custom-temple-411521.ny_taxi.green_tripdata_non_partitoned WHERE fare_amount = 0;
+
+3 Answer : - 1622
+
+-- Creating a partition and cluster table
+CREATE OR REPLACE TABLE custom-temple-411521.ny_taxi.green_tripdata_partitoned_clustered
+PARTITION BY DATE(lpep_pickup_datetime)
+CLUSTER BY PUlocationID AS
+SELECT * FROM custom-temple-411521.ny_taxi.external_green_tripdata;
+
+4. Answer : - Partition by lpep_pickup_datetime Cluster on PUlocationID
+
+SELECT DISTINCT PULocationID
+FROM custom-temple-411521.ny_taxi.green_tripdata_non_partitoned
+WHERE DATE(lpep_pickup_datetime) BETWEEN '2022-06-01' AND '2022-06-30';
+
+This query will process 12.82 MB when run.
+
+SELECT DISTINCT PULocationID
+FROM custom-temple-411521.ny_taxi.green_tripdata_partitoned_clustered
+WHERE DATE(lpep_pickup_datetime) BETWEEN '2022-06-01' AND '2022-06-30';
+
+This query will process 1.12 MB when run.
+
+5: Answer : - 12.82 MB for non-partitioned table and 1.12 MB for the partitioned table
+
+6: Answer : - GCP Bucket
+
+7: Answer : - True
+
+Bonus Question 8:- 
+
+SELECT count(*) FROM custom-temple-411521.ny_taxi.green_tripdata_non_partitoned;
+
+Answer :- This query will process 0 B when run.
+ 
+Becuase Bigquery can optimize certain queries such as SELECT COUNT(*) to avoid reading data if it can provide an accurate count based on metadata.

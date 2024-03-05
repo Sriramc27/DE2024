@@ -1,0 +1,28 @@
+spark.version
+
+1 Answer : - 3.3.2
+
+
+2 Answer : - 6 MB 
+ls -lh fhv/2019/10/
+total 38M
+-rw-r--r-- 1 codespace codespace    0 Mar  4 23:44 _SUCCESS
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00000-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00001-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00002-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00003-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00004-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+-rw-r--r-- 1 codespace codespace 6.3M Mar  4 23:44 part-00005-812a9779-c1ac-4332-ab6e-a14665eecfc9-c000.snappy.parquet
+
+3 Answer : - 62,610
+
+
+
+4. Answer : - 631,152.50 Hours 
+
+
+5: Answer : - 4040
+
+6: Answer : - Jamaica Bay
+
+
